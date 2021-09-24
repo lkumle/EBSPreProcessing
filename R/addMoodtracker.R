@@ -1,11 +1,10 @@
-
-
 addMoodtracker <- function(MOOD, subDatabase){
   
   
   # create data frame
   data <- data.frame()
-    
+  
+  MOOD$timeStamp <- as.POSIXct(MOOD$timeStamp, format="%a %b %d %Y %H:%M:%S", tz = 'GMT')
   # ------------------------------------------ # 
   # 1: go through all etries in mood data file
   # ------------------------------------------ #
@@ -33,6 +32,8 @@ addMoodtracker <- function(MOOD, subDatabase){
     
   } #end for ID in unique ID
 
-  # return data frame 
+  # return data frame
+  data$rowGobal <- 1:nrow(data) # variable for indexing later on
+  
   return(data)
 }

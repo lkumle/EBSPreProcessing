@@ -2,18 +2,12 @@
 
 readData <- function(path){
   
-  INTRO <<- read.csv(paste0(path,"q_UCL_introQ.csv"))
+  files <- list.files(path) # list all csv files specified in path 
+  dataFrames<- lapply(paste0(path,files), read.csv) # read in all files
   
-  PANAS <<- read.csv(paste0(path,"/q_UCL_PANAS.csv"))
+  # store name of file in list as well so we can find it later
+  names(dataFrames) <- gsub("\\.csv$", "", files)
+  names(dataFrames) <- gsub(files, pattern = ".csv", replacement = "")
   
-  SDQminus <<- read.csv(paste0(path,"q_UCL_SDQ17minus.csv"))
-  
-  SDQplus <<- read.csv(paste0(path,"q_UCL_SDQ17plus.csv"))
-  
-  MOOD <<- read.csv(paste0(path,"q_UCL_moodTracker.csv"))
-  MOOD$timeStamp <<- stringTimestampToTimestampTZ(timeStamp = MOOD$timeStamp)
-  
-  BACK2 <<- read.csv(paste0(path,"ucl_2Back.csv"))
-  BACK2$timeStamp <<- stringTimestampToTimestampTZ(timeStamp = BACK2$timeStamp)
-
+  return(dataFrames)
 }
