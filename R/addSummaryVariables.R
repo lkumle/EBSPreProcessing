@@ -17,10 +17,10 @@ addSummaryVariables <- function(data){
     # Did participant complete ANY task at this timepoint?
     #check if any of the "completedTask" variables is TRUE (=1) --> if yes, mark as true
     # first 5 "completed" variables are from tasks --> we don't want to count questionnaire completions
-    data$completedTask[subData$rowGlobal] <- ifelse(rowSums(select(subData, contains("completed"))[1:5]) > 0, T, F)
+    data$completedTask[subData$rowGlobal] <- ifelse(rowSums(dplyr::select(subData, dplyr::contains("completed"))[1:5]) > 0, T, F)
     
     # How many tasks did participant complete in one session?
-    data$NTasksSession[subData$rowGlobal] <- rowSums(select(subData, contains("completed"))[1:5])
+    data$NTasksSession[subData$rowGlobal] <- rowSums(dplyr::select(subData, dplyr::contains("completed"))[1:5])
     
     #How many times participants used the app (any usage)
     data$TimesUsageTotal[subData$rowGlobal] <- nrow(subData)
@@ -29,7 +29,7 @@ addSummaryVariables <- function(data){
     data$NcompletedMoodtracker[subData$rowGlobal] <- nrow(subData)
     
     #How many times participants completed any task
-    data$NTasks[subData$rowGlobal] <- sum(rowSums(select(subData, contains("completed"))[1:5]))
+    data$NTasks[subData$rowGlobal] <- sum(rowSums(dplyr::select(subData, dplyr::contains("completed"))[1:5]))
     
     #How many times participants completed the ucl_2back
     data$N_2Back[subData$rowGlobal] <- sum(subData$completed_2Back)
@@ -47,14 +47,14 @@ addSummaryVariables <- function(data){
     data$N_nBack[subData$rowGlobal] <- sum(subData$completed_nBack)
     
     #Date first & last use
-    TimeStamps <- as.vector(as.matrix(select(subData, contains("timeStamp")))) # put all timestamps into one vector
+    TimeStamps <- as.vector(as.matrix(dplyr::select(subData, dplyr::contains("timeStamp")))) # put all timestamps into one vector
     data$firstUse[subData$rowGlobal] <- min(TimeStamps, na.rm = T) # first use (smallest timestamp)
     data$lastUse[subData$rowGlobal] <- max(TimeStamps, na.rm = T) # last use (smallest timestamp)
     
     
     # move new columns to front
     data <- data %>%
-      dplyr::select(all_of(aggVariables), everything())
+      dplyr::select(dplyr::all_of(aggVariables), dplyr::everything())
     
     return(data)
     
