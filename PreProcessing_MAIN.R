@@ -1,62 +1,80 @@
-# ---------------------------------------------------------------------- #
-#                       APP - DATA EXTRACTION MAIN FILE                  # 
-# ---------------------------------------------------------------------- #
+##########################################################################
+#                                                                        #
+#                       PREPROCESSING APP DATA                           # 
+#                          ----- main -----                              #
+#                                                                        #
+##########################################################################
 
-rm(list= ls())
+# --------------------------------------- # 
+# HOW TO USE THIS SCRIPT
+# --------------------------------------- #
+
+# This script handles the pre-processing of the App data by calling 
+# the relevant functions included in the PreProcessing R-package. 
+# For more details regarding the project structure, see README. 
+
+# ----
+# Steps for running this script:
+
+# 1. Simply run all lines of code included in "0.prepare"
+# 2. In "1. run preprocessing", change "path" & "pathOUT" to the 
+#    according location on your machine
+#    --> more information on recommended file structure in README
+# 3. Run line "data <- PreProcessing(path, pathOUT)"
+# 4. Wait - the preprocessing functons will print updates into the console. 
+# ----
+
+# --------------------------------------- # 
 # 0. prepare
-library(dplyr)
+# --------------------------------------- #
 
-library(devtools) # ADD : download devtools package if required
+# ---- 
+# A: clear global environment/workspace
+rm(list= ls()) 
 
-# ---- set up environment ----- #  
-devtools::build() 
-devtools::install()
-library(PreProcessing)
-# ----------------------------- # 
+# ----
+# B: install/load dependencies
+#   -->  # we need devtools to install the local package
+if (!require("devtools", character.only = TRUE)) {
+  install.packages("devtools", dependencies = TRUE)}
 
-load_all() # load preprocessing functions
+# ----
+# C: get local preprocessing package
+#   --> this builds and loads all functions in the /R folder into a package
+#   --> by loading the package, we can use them in our preprocessing
 
-# this is where the data is
-path = "~/Dropbox/MoodTracker/Data/csv/"
-
-
-# -------------------- # 
-# 1. read in data 
-# -------------------- # 
-dataFrames <- readData(path)
-
-# -------------------- # 
-# 2. create subject database
-# -------------------- # 
-subDatabase <- createDatabase(dataFrames$q_UCL_introQ)
-
-# -------------------- # 
-# 3:combine moodtracker with subject INTRO data
-# -------------------- # 
-data <- addMoodtracker(dataFrames$q_UCL_moodTracker, subDatabase)
-
-# -------------------- # 
-# 4: add task data 
-# -------------------- # 
-# -> get names of all tasks (cut off the .csv to find it in dataFrames)
-taskIDs <- gsub(".csv", "", list.files(path, pattern = "ucl_"))
-
-for(task in taskIDs){
-  
-  #name of task without "ucl_"
-  ID <- gsub(task, pattern = "ucl_", replacement = "") 
-  
-  # add Task data to main data frame
-  data <- addTaskData(data, subDatabase, taskID = ID, taskData = dataFrames[[task]]) 
-}
-
-# --------------------------- # 
-# 5: add questionnaire data 
-# --------------------------- # 
+devtools::build() # buold scripts into package
+devtools::install() # install locally 
+library(PreProcessing) # load
 
 
-# --------------------------- # 
-# 6: add aggregated variables
-# --------------------------- #
+
+# --------------------------------------- # 
+# 1. RUN PREPROCESSING
+# --------------------------------------- #
+
+# ----
+# A: specify location of data & where preprocessed data should be stored to
+#    --> ATTENTION: the pre-processing will try to combine ALL "csv" files in the data
+#                   folder. Please store the "key"-files in a seperate folder.
+#    --> SEE: suggested folder structure as outlined in README
+
+path = "~/Dropbox/MoodTracker/Data/csv/" # this is where the data is
+pathOUT = "~/Dropbox/MoodTracker/Data/preprocessed/" # this is where data is saved to
+
+
+# ----
+# B: Run actual pre-processing
+#    -->  this line will save the finished data frame into the workspace
+#    --> if you only want to save the data to file, comment out this line and use line below
+#    --> see "keys_preprocessedData.csv" for description and naming of variables 
+data <- PreProcessing(path, pathOUT) 
+
+
+#    --> only save data to file: 
+# PreProcessing(path, pathOUT, return = F)
+
+
+
 
 

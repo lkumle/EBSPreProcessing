@@ -1,16 +1,17 @@
-Package: PreProcessing
-Title: What the Package Does (One Line, Title Case)
+Package: EBS_PreProcessing
+Title: Combine data from Emotional Brain Study App
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Kumle",
+           family = "Leah",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+           email = "fleahkumle@gmail.com")
+Description: Reads in all separate data file returned by Emotional Brain Study App and combines them into one data frame by matching subject and timepoints variables.
+
+License: `use_mit_license()`
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Imports: 
+    dplyr
