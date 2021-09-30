@@ -15,7 +15,7 @@ createDatabase <- function(INTRO){
   uniqueID <- dplyr::select(uniqueID, c(study_id, deviceModel, deviceUUID, timeStamp, R1_R:R11_RT))
   
   # rename variables (add INTRO_ ): moodtracker variables are also calles R1 etc (we don't want to mix them up!)
-  uniqueID <- dplyr::rename_at(uniqueID, vars(names(uniqueID[,4:37])), ~ paste0("INTRO_",names(uniqueID[,4:37])))
+  uniqueID <- dplyr::rename_at(uniqueID, dplyr::vars(names(uniqueID[,4:37])), ~ paste0("INTRO_",names(uniqueID[,4:37])))
   
   # index users
   uniqueID$subNo <- c(1:nrow(uniqueID)) # numerical index
