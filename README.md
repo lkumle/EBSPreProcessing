@@ -13,3 +13,10 @@ This document covers general instructions on how to use the preprocessing R-func
 ## **Quickstart**
 To simply run the preprocessing, open the *PreProcessing_Main.R* file. This is the master file containing all the necessary steps. 
 
+***
+
+## ** PreProcessing Workflow**
+
+***
+
+## **How to make changes to code**
