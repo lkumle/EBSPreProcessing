@@ -56,7 +56,8 @@ addSummaryVariables <- function(data){
   
   # move new columns to front
   data <- data %>%
-    dplyr::select(c(subNo, subID, dplyr::all_of(aggVariables)), dplyr::everything())
+    dplyr::select(c(subNo, subID, moodTracker_timeStamp, dplyr::all_of(aggVariables)), dplyr::everything()) %>%
+    dplyr::filter(subID != "unidentifiable") # get rid of all unidentifiable data points
   
   return(data)
   
