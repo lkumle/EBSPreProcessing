@@ -6,7 +6,6 @@ addSummaryVariables <- function(data){
   # add new columns: 
   # --> if new aggregated variables are added, make sure to complete them her as well
   aggVariables <- c("completedTask", "NTasksSession", "firstUse", "lastUse",  "TimesUsageTotal", "NTasks", 
-                    "TimesUsageTotal", "NcompletedMoodtracker",
                     "N_2Back","N_affectiveSetShifting", "N_backwardDigitSpan", "N_emotionalStroop","N_nBack" )
   data[aggVariables] <- NA
   
@@ -31,19 +30,19 @@ addSummaryVariables <- function(data){
     data$NTasks[subData$rowGlobal] <- sum(rowSums(dplyr::select(subData, dplyr::contains("completed"))[1:5]))
     
     #How many times participants completed the ucl_2back
-    data$N_2Back[subData$rowGlobal] <- sum(subData$completed_2Back)
+    data$N_2Back[subData$rowGlobal] <- sum(subData$`2Back_completed`)
     
     #How many times participants completed the ucl_affectiveSetShifting
-    data$N_affectiveSetShifting[subData$rowGlobal] <- sum(subData$completed_affectiveSetShifting)
+    data$N_affectiveSetShifting[subData$rowGlobal] <- sum(subData$affectiveSetShifting_completed)
     
     #How many times participants completed the ucl_backwardDigitSpan
-    data$N_backwardDigitSpan[subData$rowGlobal] <- sum(subData$completed_backwardDigitSpan)
+    data$N_backwardDigitSpan[subData$rowGlobal] <- sum(subData$backwardDigitSpan_completed)
     
     #How many times participants completed the ucl_emotionalStroop
-    data$N_emotionalStroop[subData$rowGlobal] <- sum(subData$completed_emotionalStroop)
+    data$N_emotionalStroop[subData$rowGlobal] <- sum(subData$emotionalStroop_completed)
     
     #How many times participants completed the ucl_nBack
-    data$N_nBack[subData$rowGlobal] <- sum(subData$completed_nBack)
+    data$N_nBack[subData$rowGlobal] <- sum(subData$nBack_completed)
     
     #Date first & last use
     TimeStamps <- as.vector(as.matrix(dplyr::select(subData, dplyr::contains("timeStamp")))) # put all timestamps into one vector

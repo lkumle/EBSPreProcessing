@@ -38,14 +38,14 @@ rm(list= ls())
 if (!require("devtools")) {
   install.packages("devtools", dependencies = TRUE)}
 
+
 # ----
 # C: get preprocessing package
 #   --> this loads all functions from GitHub repo
 #   --> by loading the package, we can use them in our preprocessing
 devtools::install_github("lkumle/EBSPreProcessing")
 
-library(EBSPreProcessing)
-
+library(EBSPreProcessing) # load package
 
 # --------------------------------------- # 
 # 1. RUN PREPROCESSING
