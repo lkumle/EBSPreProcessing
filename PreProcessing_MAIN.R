@@ -43,9 +43,7 @@ if (!require("devtools", character.only = TRUE)) {
 #   --> this builds and loads all functions in the /R folder into a package
 #   --> by loading the package, we can use them in our preprocessing
 
-devtools::build() # buold scripts into package
-devtools::install() # install locally 
-library(PreProcessing) # load
+devtools::install_github("lkumle/EBS_PreProcessing")
 
 
 

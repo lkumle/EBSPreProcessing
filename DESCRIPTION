@@ -1,4 +1,4 @@
-Package: EBS_PreProcessing
+Package: EBSPreProcessing
 Title: Combine data from Emotional Brain Study App
 Version: 0.0.0.9000
 Authors@R: 
