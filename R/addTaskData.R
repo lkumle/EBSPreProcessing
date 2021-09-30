@@ -31,7 +31,7 @@ addTaskData <- function(data,subDatabase, taskID, taskData, Q = F){
   # --> addtask name at beginning of all columns
   oldnames <- names(taskData[30:ncol(taskData)])
   newnames <- paste0(taskID, "_", oldnames)
-  taskData <- rename_with(taskData, ~ newnames[which(oldnames == .x)], .cols = all_of(oldnames))
+  taskData <- dplyr::rename_with(taskData, ~ newnames[which(oldnames == .x)], .cols = dplyr::all_of(oldnames))
   
   # D: get last variable of interest
   if(Q == T){

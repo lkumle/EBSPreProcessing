@@ -26,7 +26,7 @@ PreProcessing <- function(path, pathOUT, return = T){
 
   #dataMood <- data
   
-  data <- dataMood
+  #data <- dataMood
   
   # ------------------------------------ # 
   # 4: add task data and Questionnaires

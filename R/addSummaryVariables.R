@@ -54,7 +54,7 @@ addSummaryVariables <- function(data){
     
     # move new columns to front
     data <- data %>%
-      select(all_of(aggVariables), everything())
+      dplyr::select(all_of(aggVariables), everything())
     
     return(data)
     

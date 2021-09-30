@@ -35,16 +35,16 @@ rm(list= ls())
 # ----
 # B: install/load dependencies
 #   -->  # we need devtools to install the local package
-if (!require("devtools", character.only = TRUE)) {
+if (!require("devtools")) {
   install.packages("devtools", dependencies = TRUE)}
 
 # ----
-# C: get local preprocessing package
-#   --> this builds and loads all functions in the /R folder into a package
+# C: get preprocessing package
+#   --> this loads all functions from GitHub repo
 #   --> by loading the package, we can use them in our preprocessing
+devtools::install_github("lkumle/EBSPreProcessing")
 
-devtools::install_github("lkumle/EBS_PreProcessing")
-
+library(EBSPreProcessing)
 
 
 # --------------------------------------- # 
@@ -57,8 +57,8 @@ devtools::install_github("lkumle/EBS_PreProcessing")
 #                   folder. Please store the "key"-files in a seperate folder.
 #    --> SEE: suggested folder structure as outlined in README
 
-path = "~/Dropbox/MoodTracker/Data/csv/" # this is where the data is
-pathOUT = "~/Dropbox/MoodTracker/Data/preprocessed/" # this is where data is saved to
+path = "~/Dropbox/MoodTrackerApp/Data/csv/" # this is where the data is
+pathOUT = "~/Dropbox/MoodTrackerApp/Data/preprocessed/" # this is where data is saved to
 
 
 # ----

@@ -12,7 +12,7 @@ addMoodtracker <- function(MOOD, subDatabase){
   # rename variables (so we know where they are coming from later!)
   oldnames <- c(names(MOOD[30:ncol(MOOD)]), "timeStamp")
   newnames <- paste0("moodTracker_", oldnames)
-  MOOD <- rename_with(MOOD, ~ newnames[which(oldnames == .x)], .cols = all_of(oldnames))
+  MOOD <- dplyr::rename_with(MOOD, ~ newnames[which(oldnames == .x)], .cols = dplyr::all_of(oldnames))
   
   # convert timestamp
   MOOD$moodTracker_timeStamp <- as.POSIXct(MOOD$moodTracker_timeStamp, format="%a %b %d %Y %H:%M:%S", tz = 'GMT')
@@ -61,7 +61,7 @@ addMoodtracker <- function(MOOD, subDatabase){
   
   # reorder data to have subNO and subID at the front: 
   data <- data %>%
-    select(rowGlobal, subNo, subID, everything())
+    dplyr::select(rowGlobal, subNo, subID, everything())
   
   print(paste(sumNoMatch, "data point(s) failed to match"))
   
