@@ -1,6 +1,6 @@
 ##########################################################################
 #                                                                        #
-#                       PREPROCESSING APP DATA                           # 
+#                     PREPROCESSING EBS APP DATA                         # 
 #                          ----- main -----                              #
 #                                                                        #
 ##########################################################################
@@ -11,7 +11,7 @@
 
 # This script handles the pre-processing of the App data by calling 
 # the relevant functions included in the PreProcessing R-package. 
-# For more details regarding the project structure, see README. 
+# For more details regarding the project structure, see DOCUMENTATION/README. 
 
 # ----
 # Steps for running this script:
@@ -19,7 +19,7 @@
 # 1. Simply run all lines of code included in "0.prepare"
 # 2. In "1. run preprocessing", change "path" & "pathOUT" to the 
 #    according location on your machine
-#    --> more information on recommended file structure in README
+#    --> more information on recommended file structure in DOCUMENTATION/README
 # 3. Run line "data <- PreProcessing(path, pathOUT)"
 # 4. Wait - the preprocessing functons will print updates into the console. 
 # ----
@@ -55,7 +55,7 @@ library(EBSPreProcessing)
 # A: specify location of data & where preprocessed data should be stored to
 #    --> ATTENTION: the pre-processing will try to combine ALL "csv" files in the data
 #                   folder. Please store the "key"-files in a seperate folder.
-#    --> SEE: suggested folder structure as outlined in README
+#    --> SEE: suggested folder structure as outlined in DOCUMENTATION/README
 
 path = "~/Dropbox/MoodTrackerApp/Data/csv/" # this is where the data is
 pathOUT = "~/Dropbox/MoodTrackerApp/Data/preprocessed/" # this is where data is saved to

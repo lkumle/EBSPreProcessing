@@ -3,16 +3,18 @@
 #' @export
 addSummaryVariables <- function(data){
   
+  # add new columns: 
+  # --> if new aggregated variables are added, make sure to complete them her as well
+  aggVariables <- c("completedTask", "NTasksSession", "firstUse", "lastUse",  "TimesUsageTotal", "NTasks", 
+                    "TimesUsageTotal", "NcompletedMoodtracker",
+                    "N_2Back","N_affectiveSetShifting", "N_backwardDigitSpan", "N_emotionalStroop","N_nBack" )
+  data[aggVariables] <- NA
+  
   for(sub in unique(data$subID)){
     
     subData <- data[data$subID == sub,]
     
-    # add new columns: 
-    # --> if new aggregated variables are added, make sure to complete them her as well
-    aggVariables <- c("completedTask", "NTasksSession", "firstUse", "lastUse",  "TimesUsageTotal", "NcompletedMoodtracker", "NTasks", 
-                      "TimesUsageTotal", "NcompletedMoodtracker",
-                      "N_2Back","N_affectiveSetShifting", "N_backwardDigitSpan", "N_emotionalStroop","N_nBack" )
-    data[aggVariables] <- NA
+
     
     # Did participant complete ANY task at this timepoint?
     #check if any of the "completedTask" variables is TRUE (=1) --> if yes, mark as true
@@ -24,9 +26,6 @@ addSummaryVariables <- function(data){
     
     #How many times participants used the app (any usage)
     data$TimesUsageTotal[subData$rowGlobal] <- nrow(subData)
-    
-    #How many times participants completed the moodtracker
-    data$NcompletedMoodtracker[subData$rowGlobal] <- nrow(subData)
     
     #How many times participants completed any task
     data$NTasks[subData$rowGlobal] <- sum(rowSums(dplyr::select(subData, dplyr::contains("completed"))[1:5]))
@@ -51,14 +50,15 @@ addSummaryVariables <- function(data){
     data$firstUse[subData$rowGlobal] <- min(TimeStamps, na.rm = T) # first use (smallest timestamp)
     data$lastUse[subData$rowGlobal] <- max(TimeStamps, na.rm = T) # last use (smallest timestamp)
     
-    
-    # move new columns to front
-    data <- data %>%
-      dplyr::select(dplyr::all_of(aggVariables), dplyr::everything())
-    
-    return(data)
+  
     
   }
+  
+  # move new columns to front
+  data <- data %>%
+    dplyr::select(c(subNo, subID, dplyr::all_of(aggVariables)), dplyr::everything())
+  
+  return(data)
   
 }
 

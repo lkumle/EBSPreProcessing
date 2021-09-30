@@ -58,8 +58,7 @@ PreProcessing <- function(path, pathOUT, return = T){
     # add data to main data frame
     data <- addTaskData(data, subDatabase, taskID = ID, taskData = dataFrames[[df]], Q = isQ) 
   }
-  
-  
+
   # --------------------------- # 
   # 5: add aggregated variables
   # --------------------------- #
