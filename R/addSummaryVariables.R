@@ -5,10 +5,7 @@ addSummaryVariables <- function(data){
   
   before <- nrow(data) # how many entries do we have before?
   
-  # remove duplicate rows in moodtracker data --> otherwise they are couted multiple times in summary statistics
-  data <- data %>%
-    dplyr::distinct_at(dplyr::vars(subID,moodTracker_timeStamp),.keep_all = T)  
-  
+
   # add new columns: 
   # --> if new aggregated variables are added, make sure to complete them her as well
   aggVariables <- c("completedTask", "NTasksSession", "firstUse", "lastUse",  "TimesUsageTotal", "NTasks", 
@@ -67,11 +64,13 @@ addSummaryVariables <- function(data){
   
   
   
-  
+  data$subNo <- as.numeric(data$subNo)
   
   data <- data %>%
-    dplyr::select(c(subNo, subID, moodTracker_timeStamp, dplyr::all_of(aggVariables)), dplyr::everything()) %>% # move new columns to front
-    dplyr::filter(subID != "unidentifiable") # get rid of all unidentifiable data points 
+    dplyr::select(c(subNo, subID, study_id, moodTracker_timeStamp, dplyr::all_of(aggVariables)), dplyr::everything()) %>% # move new columns to front
+    dplyr::filter(subID != "unidentifiable") %>% # get rid of all unidentifiable data points 
+    dplyr::arrange(subNo)
+  
   
   
   removed <- before - nrow(data)

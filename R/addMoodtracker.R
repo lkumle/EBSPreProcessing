@@ -17,7 +17,9 @@ addMoodtracker <- function(MOOD, subDatabase){
   # convert timestamp
   MOOD$moodTracker_timeStamp <- as.POSIXct(MOOD$moodTracker_timeStamp, format="%a %b %d %Y %H:%M:%S", tz = 'GMT')
   
-  
+  # remove duplicate rows in moodtracker data --> somehow there are a lot!
+  MOOD <- MOOD %>% # -> remove if same subject and EXACTLY the same timestamp
+    dplyr::distinct_at(dplyr::vars(study_id, deviceModel,deviceUUID,moodTracker_timeStamp),.keep_all = T)  
   
   # count how many entries can not be matched
   sumNoMatch <- 0
@@ -40,7 +42,7 @@ addMoodtracker <- function(MOOD, subDatabase){
       sumNoMatch <- sumNoMatch+ 1}
   
     # retrieve data (we can cut out the device/name variables - from here on we will use subject numbers)
-    IDData <- subDatabase[subDatabase$subID == subID, 4:ncol(subDatabase)]  # subject data
+    IDData <- subDatabase[subDatabase$subID == subID, -c(2:3)]  # subject data
     moodData <- dplyr::select(MOOD[sess,], c(moodTracker_timeStamp, moodTracker_R1_R:moodTracker_R4_RT)) # moodtracker data
     
     # rename moodtracker data (so we know wher the variables come from later)
