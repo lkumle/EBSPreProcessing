@@ -17,10 +17,17 @@ addMoodtracker <- function(MOOD, subDatabase){
   # convert timestamp
   MOOD$moodTracker_timeStamp <- as.POSIXct(MOOD$moodTracker_timeStamp, format="%a %b %d %Y %H:%M:%S", tz = 'GMT')
   
+  before <- nrow(MOOD)
   # remove duplicate rows in moodtracker data --> somehow there are a lot!
   MOOD <- MOOD %>% # -> remove if same subject and EXACTLY the same timestamp
     dplyr::distinct_at(dplyr::vars(study_id, deviceModel,deviceUUID,moodTracker_timeStamp),.keep_all = T)  
   
+  # notify how many entries got removed
+  print("Removing duplicated entries")
+  removed <- before - nrow(MOOD)
+  print(paste( "--->" , removed, "data entires removed"))
+
+
   # count how many entries can not be matched
   sumNoMatch <- 0
   # ------------------------------------------ # 
@@ -56,14 +63,30 @@ addMoodtracker <- function(MOOD, subDatabase){
     
   } #end for ID in unique ID
 
-  # return data frame
-  data$rowGlobal <- 1:nrow(data) # variable for indexing later on
   
-  # convert to posixct again....
+  
+  # prepare for case that subjects do same task more than once per session --> we will cut this back later!
+  # --> assumption: no one does more that 10 repeats of one task per session
+  data$TaskCounter <- 1
+  data_final <- data
+  for(i in 2:10){
+    data_new <- data # make copy
+    data_new$TaskCounter <- i # change TaskCunter of copy
+    data_final  <- dplyr::bind_rows(data_final, data_new) # add to final data
+  }
+  
+  data <- data_final
+  
+
   
   # reorder data to have subNO and subID at the front: 
   data <- data %>%
-    dplyr::select(rowGlobal, subNo, subID, everything())
+    dplyr::select(rowGlobal, subNo, subID, TaskCounter, moodTracker_timeStamp,everything()) %>%
+    dplyr::arrange(moodTracker_timeStamp)
+  
+  # return data frame
+  data$rowGlobal <- 1:nrow(data) # variable for indexing later on
+  
   
   print(paste(sumNoMatch, "data point(s) failed to match"))
   
