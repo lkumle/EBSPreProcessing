@@ -78,6 +78,7 @@ addMoodtracker <- function(MOOD, subDatabase){
   data <- data_final
   
 
+  data$rowGlobal <- 1:nrow(data)
   
   # reorder data to have subNO and subID at the front: 
   data <- data %>%
