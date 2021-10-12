@@ -49,7 +49,9 @@ addTaskData <- function(data,subDatabase, taskID, taskData, Q = F){
   task_columns <- names(taskData)[30:lastVariable] # use indexes provided
   data[task_columns] <- NA
   
-
+  # sort taskdata by timestamp --> make sure that data is stored in order
+  taskData <- dplyr::arrange(taskData, timeStamp)
+  
   
   colsAfter <- ncol(data) # check how many columns data frame has now
   
