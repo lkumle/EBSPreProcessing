@@ -57,8 +57,8 @@ library(EBSPreProcessing) # load package
 #                   folder. Please store the "key"-files in a seperate folder.
 #    --> SEE: suggested folder structure as outlined in DOCUMENTATION/README
 
-path = "~/Dropbox/MoodTrackerApp/Data/csv/" # this is where the data is
-pathOUT = "~/Dropbox/MoodTrackerApp/Data/preprocessed/" # this is where data is saved to
+path = "~/Dropbox/UNSW/MoodTrackerApp/analysis/Data/csv/" # this is where the data is
+pathOUT = "~/Dropbox/UNSW/MoodTrackerApp/analysis/Data/preprocessed/" # this is where data is saved to
 
 
 # ----

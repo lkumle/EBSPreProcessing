@@ -1,4 +1,5 @@
 #' function reading in all data files and storing them in a list
+#' path = path to files on machine 
 
 readData <- function(path){
   

@@ -23,8 +23,6 @@ PreProcessing <- function(path, pathOUT, return = T){
   # -------------------- # 
   print("---------------------------------------")
   data <- addMoodtracker(dataFrames$q_UCL_moodTracker, subDatabase)
-
-  #dataMood <- data
   
   #data <- dataMood
   
